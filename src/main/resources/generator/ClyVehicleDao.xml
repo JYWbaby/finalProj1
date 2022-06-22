@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="generate.ClyVehicleDao">
+  <resultMap id="BaseResultMap" type="generate.ClyVehicle">
+    <id column="vin" jdbcType="INTEGER" property="vin" />
+    <result column="make" jdbcType="VARCHAR" property="make" />
+    <result column="model" jdbcType="VARCHAR" property="model" />
+    <result column="year" jdbcType="TIMESTAMP" property="year" />
+    <result column="plate" jdbcType="VARCHAR" property="plate" />
+    <result column="oid" jdbcType="INTEGER" property="oid" />
+    <result column="type" jdbcType="VARCHAR" property="type" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    vin, make, model, `year`, plate, oid, `type`
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from cly_vehicle
+    where vin = #{vin,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from cly_vehicle
+    where vin = #{vin,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" keyColumn="vin" keyProperty="vin" parameterType="generate.ClyVehicle" useGeneratedKeys="true">
+    insert into cly_vehicle (make, model, `year`, 
+      plate, oid, `type`)
+    values (#{make,jdbcType=VARCHAR}, #{model,jdbcType=VARCHAR}, #{year,jdbcType=TIMESTAMP}, 
+      #{plate,jdbcType=VARCHAR}, #{oid,jdbcType=INTEGER}, #{type,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" keyColumn="vin" keyProperty="vin" parameterType="generate.ClyVehicle" useGeneratedKeys="true">
+    insert into cly_vehicle
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="make != null">
+        make,
+      </if>
+      <if test="model != null">
+        model,
+      </if>
+      <if test="year != null">
+        `year`,
+      </if>
+      <if test="plate != null">
+        plate,
+      </if>
+      <if test="oid != null">
+        oid,
+      </if>
+      <if test="type != null">
+        `type`,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="make != null">
+        #{make,jdbcType=VARCHAR},
+      </if>
+      <if test="model != null">
+        #{model,jdbcType=VARCHAR},
+      </if>
+      <if test="year != null">
+        #{year,jdbcType=TIMESTAMP},
+      </if>
+      <if test="plate != null">
+        #{plate,jdbcType=VARCHAR},
+      </if>
+      <if test="oid != null">
+        #{oid,jdbcType=INTEGER},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="generate.ClyVehicle">
+    update cly_vehicle
+    <set>
+      <if test="make != null">
+        make = #{make,jdbcType=VARCHAR},
+      </if>
+      <if test="model != null">
+        model = #{model,jdbcType=VARCHAR},
+      </if>
+      <if test="year != null">
+        `year` = #{year,jdbcType=TIMESTAMP},
+      </if>
+      <if test="plate != null">
+        plate = #{plate,jdbcType=VARCHAR},
+      </if>
+      <if test="oid != null">
+        oid = #{oid,jdbcType=INTEGER},
+      </if>
+      <if test="type != null">
+        `type` = #{type,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where vin = #{vin,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="generate.ClyVehicle">
+    update cly_vehicle
+    set make = #{make,jdbcType=VARCHAR},
+      model = #{model,jdbcType=VARCHAR},
+      `year` = #{year,jdbcType=TIMESTAMP},
+      plate = #{plate,jdbcType=VARCHAR},
+      oid = #{oid,jdbcType=INTEGER},
+      `type` = #{type,jdbcType=VARCHAR}
+    where vin = #{vin,jdbcType=INTEGER}
+  </update>
+</mapper>
